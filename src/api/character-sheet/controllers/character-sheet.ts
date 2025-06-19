@@ -1,9 +1,5 @@
 'use strict';
 
-/**
- * A set of functions called "actions" for `character-sheet`
- */
-
 export default {
   find: async (ctx) => {
     try {
@@ -23,7 +19,6 @@ export default {
               }
             }
           },
-          // เพิ่มบรรทัดนี้เพื่อบอกให้ดึงข้อมูล Enhancement มาด้วย
           enhancements: {
             populate: {
               Enhancement_Icon: true
@@ -34,7 +29,7 @@ export default {
 
       });
       ctx.body = { data };
-    } catch (err) => {
+    } catch (err) {
       ctx.body = err;
     }
   },
