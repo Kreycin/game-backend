@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_enhancements_enhancements",
+  "info": {
+    "displayName": "Enhancement"
+  },
+  "options": {},
+  "attributes": {
+    "Enhancement_Icon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Description": {
+      "type": "blocks"
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_skills_skills",
+  "info": {
+    "displayName": "Skill",
+    "icon": "cog"
+  },
+  "options": {},
+  "attributes": {
+    "Skill_Name": {
+      "type": "string"
+    },
+    "Skill_Type": {
+      "type": "string"
+    },
+    "Skill_Description": {
+      "type": "blocks"
+    },
+    "Skill_Icon": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "skill_effects": {
+      "type": "component",
+      "component": "effects.effect",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

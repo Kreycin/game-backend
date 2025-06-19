@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_effects_effects",
+  "info": {
+    "displayName": "Effect"
+  },
+  "options": {},
+  "attributes": {
+    "Effect_Name": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "blocks"
+    },
+    "Effect_Icon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  },
+  "config": {}
+}
