@@ -9,7 +9,7 @@ export default {
     try {
       const data = await strapi.entityService.findMany('api::character.character', {
         
-        // --- ★★★ เพิ่ม enhancements เข้าไปใน populate ★★★ ---
+        // --- ★★★ โค้ด Populate ที่ถูกต้องสำหรับ TypeScript ★★★ ---
         populate: {
           Main_Art: true,
           Avatar: true,
@@ -34,7 +34,7 @@ export default {
 
       });
       ctx.body = { data };
-    } catch (err) {
+    } catch (err) => {
       ctx.body = err;
     }
   },
