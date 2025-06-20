@@ -1,15 +1,37 @@
-// path: config/middlewares.ts
+// path: game-backend/config/middlewares.ts
+
 export default [
   'strapi::errors',
-  'strapi::security',
+  {
+    name: 'strapi::security',
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'https'],
+          'img-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'res.cloudinary.com', // <--- บอกให้โหลดรูปจาก Cloudinary ได้
+          ],
+          'media-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'res.cloudinary.com', // <--- บอกให้โหลดวิดีโอ/สื่อจาก Cloudinary ได้
+          ],
+          upgradeInsecureRequests: null,
+        },
+      },
+    },
+  },
   {
     name: 'strapi::cors',
     config: {
-      // ไม่ต้องมี enabled: true แล้วครับ
       origin: [
         'http://localhost:5173', 
         'http://localhost:1337',
-        // --- ★★★ เพิ่ม URL ของเว็บ Vercel ของนายตรงนี้เลย! ★★★ ---
         'https://demonslayergame-hub.vercel.app' 
       ],
       headers: '*',
