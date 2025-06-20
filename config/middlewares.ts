@@ -13,13 +13,13 @@ export default [
             "'self'",
             'data:',
             'blob:',
-            'res.cloudinary.com', // <--- บอกให้โหลดรูปจาก Cloudinary ได้
+            'res.cloudinary.com',
           ],
           'media-src': [
             "'self'",
             'data:',
             'blob:',
-            'res.cloudinary.com', // <--- บอกให้โหลดวิดีโอ/สื่อจาก Cloudinary ได้
+            'res.cloudinary.com',
           ],
           upgradeInsecureRequests: null,
         },
@@ -32,7 +32,8 @@ export default [
       origin: [
         'http://localhost:5173', 
         'http://localhost:1337',
-        'https://demonslayergame-hub.vercel.app' 
+        'https://demonslayergame-hub.vercel.app',
+        'https://game-frontend-red.vercel.app' // ★★★ เพิ่มบรรทัดนี้เข้าไป ★★★
       ],
       headers: '*',
     },
