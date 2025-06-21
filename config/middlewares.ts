@@ -32,8 +32,9 @@ export default [
       origin: [
         'http://localhost:5173', 
         'http://localhost:1337',
-        'https://demonslayergame-hub.vercel.app',
-        'https://game-frontend-red.vercel.app' // ★★★ บรรทัดนี้คือหัวใจสำคัญ ★★★
+        'https://demonslayergame-hub.vercel.app', // URL เก่า
+        'https://game-frontend-red.vercel.app',   // URL ที่สร้างใหม่ตอนแรก
+        'https://demonslayer-character-hub.vercel.app' // ★★★ URL ปัจจุบันที่ถูกต้อง ★★★
       ],
       headers: '*',
     },
