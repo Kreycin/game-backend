@@ -33,7 +33,7 @@ export default [
         'http://localhost:5173', 
         'http://localhost:1337',
         'https://demonslayergame-hub.vercel.app',
-        'https://game-frontend-red.vercel.app' // ★★★ เพิ่มบรรทัดนี้เข้าไป ★★★
+        'https://game-frontend-red.vercel.app' // ★★★ บรรทัดนี้คือหัวใจสำคัญ ★★★
       ],
       headers: '*',
     },
