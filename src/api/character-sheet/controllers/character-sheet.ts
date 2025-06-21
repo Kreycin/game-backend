@@ -5,22 +5,37 @@
 export default {
   find: async (ctx) => {
     try {
-      // ใช้ 'deep' เพื่อให้ populate ข้อมูลทั้งหมดที่ซ้อนกันอยู่
+      // 1. กลับมาใช้ populate object แบบเต็มที่ถูกต้อง
       const entities = await strapi.entityService.findMany('api::character.character', {
-        populate: 'deep', 
+        populate: {
+          Main_Art: true,
+          Avatar: true,
+          skills: {
+            populate: {
+              Skill_Icon: true,
+              skill_effects: {
+                populate: {
+                  Effect_Icon: true
+                }
+              }
+            }
+          },
+          enhancements: {
+            populate: {
+              Enhancement_Icon: true
+            }
+          }
+        }
       });
 
-      // ★★★ นี่คือขั้นตอนสำคัญที่ขาดไป ★★★
-      // เราจะแปลงข้อมูลให้อยู่ในรูปแบบ { id, attributes: { ... } }
-      // เหมือนกับที่ API ปกติของ Strapi ทำ เพื่อให้ Frontend ทำงานได้
+      // 2. ใช้วิธีแปลงข้อมูลที่ปลอดภัยและถูกต้องกว่าเดิม
       const transformedData = entities.map(entity => {
-        const { id, createdBy, updatedBy, createdAt, updatedAt, publishedAt, ...attributes } = entity;
+        const { id, ...attributes } = entity;
         return { id, attributes };
       });
 
       ctx.body = { data: transformedData };
     } catch (err) {
-      // Log error ที่ฝั่ง server เพื่อให้เห็นปัญหาได้ง่ายขึ้น
       console.error(err);
       ctx.body = err;
     }
