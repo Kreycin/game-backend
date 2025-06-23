@@ -7,9 +7,12 @@ export default ({ env }) => ({
   },
   transfer: {
     token: {
-      salt: env('TRANSFER_TOKEN_SALT'),
+      // <<< ปรับแก้บรรทัดนี้ >>>
+      // ให้ใช้ค่าเดียวกับ apiToken.salt เพื่อแก้ปัญหา warning
+      salt: env('API_TOKEN_SALT'),
     },
   },
+  // ส่วนที่เหลือปล่อยไว้เหมือนเดิม
   secrets: {
     encryptionKey: env('ENCRYPTION_KEY'),
   },
