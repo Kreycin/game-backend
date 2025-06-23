@@ -1,9 +1,36 @@
-export default [
-  'strapi::logger',
+module.exports = [
   'strapi::errors',
-  'strapi::security',
+  {
+    name: 'strapi::security',
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'http:', 'https:'],
+          'img-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'market-assets.strapi.io',
+            // เพิ่มโดเมนของ Cloudinary เข้าไปในรายการที่อนุญาต
+            'res.cloudinary.com',
+          ],
+          'media-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            'market-assets.strapi.io',
+            // เพิ่มโดเมนของ Cloudinary เข้าไปในรายการที่อนุญาต
+            'res.cloudinary.com',
+          ],
+          upgradeInsecureRequests: null,
+        },
+      },
+    },
+  },
   'strapi::cors',
   'strapi::poweredBy',
+  'strapi::logger',
   'strapi::query',
   'strapi::body',
   'strapi::session',
