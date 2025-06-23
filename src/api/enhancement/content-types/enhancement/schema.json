@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "enhancements",
+  "info": {
+    "singularName": "enhancement",
+    "pluralName": "enhancements",
+    "displayName": "Enhancement"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Enhancement_Icon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Description": {
+      "type": "blocks"
+    }
+  }
+}

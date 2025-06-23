@@ -1,0 +1,123 @@
+{
+  "kind": "collectionType",
+  "collectionName": "characters",
+  "info": {
+    "singularName": "character",
+    "pluralName": "characters",
+    "displayName": "Character"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true
+    },
+    "Character_ID": {
+      "type": "uid",
+      "targetField": "Name"
+    },
+    "Rarity": {
+      "type": "enumeration",
+      "enum": [
+        "UR",
+        "SP",
+        "SSR"
+      ]
+    },
+    "Role": {
+      "type": "string"
+    },
+    "Element": {
+      "type": "enumeration",
+      "enum": [
+        "Legend",
+        "Demon"
+      ]
+    },
+    "HP": {
+      "type": "integer"
+    },
+    "ATK": {
+      "type": "integer"
+    },
+    "DEF": {
+      "type": "integer"
+    },
+    "SPD": {
+      "type": "integer"
+    },
+    "CRIT_DMG": {
+      "type": "string"
+    },
+    "Lifesteal": {
+      "type": "string"
+    },
+    "Penetration": {
+      "type": "string"
+    },
+    "CRIT_rate": {
+      "type": "string"
+    },
+    "CRIT_Res": {
+      "type": "string"
+    },
+    "Debuff_Acc": {
+      "type": "string"
+    },
+    "Debuff_Res": {
+      "type": "string"
+    },
+    "Accuracy": {
+      "type": "string"
+    },
+    "Doge": {
+      "type": "string"
+    },
+    "Healing_Amt": {
+      "type": "string"
+    },
+    "Healing_Amt_P": {
+      "type": "string"
+    },
+    "Extra_DMG": {
+      "type": "string"
+    },
+    "DMG_Res": {
+      "type": "string"
+    },
+    "CRIT_DMG_Res": {
+      "type": "string"
+    },
+    "Main_Art": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Avatar": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "YouTube_URL": {
+      "type": "string"
+    },
+    "Star_Levels": {
+      "type": "component",
+      "component": "character.star-level-data",
+      "repeatable": true
+    }
+  }
+}

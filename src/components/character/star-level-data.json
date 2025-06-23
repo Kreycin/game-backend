@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_character_star_level_data",
+  "info": {
+    "displayName": "Star_Level_Data",
+    "icon": "check"
+  },
+  "options": {},
+  "attributes": {
+    "Star_Level": {
+      "type": "enumeration",
+      "enum": [
+        "star5",
+        "star8",
+        "star11",
+        "star14",
+        "star16",
+        "star19"
+      ]
+    },
+    "enhancements": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::enhancement.enhancement"
+    },
+    "skill_descriptions": {
+      "type": "component",
+      "component": "skill-description-by-levels.skill-description-by-level",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}
