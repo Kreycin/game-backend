@@ -14,10 +14,7 @@ export default {
               }
             },
             skill_descriptions: {
-              // In here, we only populate the 'skill' relation.
-              // 'Description' is a simple field and will be fetched automatically.
               populate: {
-                // REMOVED 'Description: true' FROM HERE
                 skill: {
                   populate: {
                     Skill_Icon: true,
@@ -35,7 +32,13 @@ export default {
       };
 
       const entities = await strapi.entityService.findMany('api::character.character', {
-        populate: populateOptions
+        populate: populateOptions,
+        
+        // =======================================================
+        // <<< เพิ่มบรรทัดนี้เพื่อเรียงลำดับข้อมูลตามวันที่เผยแพร่ล่าสุด >>>
+        sort: { publishedAt: 'desc' }
+        // =======================================================
+
       });
 
       const transformedData = entities.map(entity => {
@@ -46,8 +49,9 @@ export default {
       ctx.body = { data: transformedData };
 
     } catch (err) {
-      console.error('--- [DEBUG] An error occurred in the final controller:', err);
-      ctx.body = err;
+      console.error('--- [DEBUG] An error occurred in the controller:', err);
+      // ปรับปรุงการจัดการ Error ให้ปลอดภัยขึ้น
+      ctx.internalServerError('An unexpected error occurred.');
     }
   }
 };
