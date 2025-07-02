@@ -528,6 +528,34 @@ export interface ApiEnhancementEnhancement extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiSiteCounterSiteCounter extends Struct.SingleTypeSchema {
+  collectionName: 'site_counters';
+  info: {
+    displayName: 'SiteCounter';
+    pluralName: 'site-counters';
+    singularName: 'site-counter';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::site-counter.site-counter'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    views: Schema.Attribute.Integer;
+  };
+}
+
 export interface ApiSkillSkill extends Struct.CollectionTypeSchema {
   collectionName: 'skills';
   info: {
@@ -1072,6 +1100,7 @@ declare module '@strapi/strapi' {
       'api::character.character': ApiCharacterCharacter;
       'api::effect.effect': ApiEffectEffect;
       'api::enhancement.enhancement': ApiEnhancementEnhancement;
+      'api::site-counter.site-counter': ApiSiteCounterSiteCounter;
       'api::skill.skill': ApiSkillSkill;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
