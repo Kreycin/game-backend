@@ -1,3 +1,4 @@
+// config/middlewares.ts
 module.exports = [
   'strapi::errors',
   {
@@ -28,7 +29,20 @@ module.exports = [
       },
     },
   },
-  'strapi::cors',
+  // vvvv นี่คือส่วนที่แก้ไข vvvv
+  {
+    name: 'strapi::cors',
+    config: {
+      enabled: true,
+      headers: '*',
+      origin: [
+        'http://localhost:1337',
+        'http://localhost:5173',
+        'https://demonslayerhub.vercel.app'
+      ]
+    }
+  },
+  // ^^^^ สิ้นสุดส่วนที่แก้ไข ^^^^
   'strapi::poweredBy',
   'strapi::logger',
   'strapi::query',
