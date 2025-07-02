@@ -39,7 +39,7 @@ module.exports = [
         'http://localhost:1337',
         'http://localhost:5173',
         'https://demonslayerhub.vercel.app',
-        'https://newcharacterleaked.vercel.app/'
+        'https://newcharacterleaked.vercel.app'
       ]
     }
   },
