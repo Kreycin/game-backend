@@ -7,7 +7,7 @@
     "displayName": "SiteCounter"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
