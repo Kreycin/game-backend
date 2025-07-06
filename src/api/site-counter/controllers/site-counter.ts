@@ -7,37 +7,39 @@
 
 import { factories } from '@strapi/strapi';
 
-// เราจะใช้วิธี "extending the core controller"
-// เพื่อเพิ่ม custom action ของเราเข้าไป
 export default factories.createCoreController('api::site-counter.site-counter', ({ strapi }) => ({
-
-  // นี่คือ Custom Action ที่เราสร้างขึ้น
+  // ฟังก์ชันสำหรับเพิ่มยอดวิว
   async increment(ctx) {
-    // สมมติว่าเรามีข้อมูล counter แค่ 1 รายการ และมี id = 1 เสมอ
-    // ใน Content-Type ของคุณต้องมี field สำหรับเก็บตัวเลข เช่นชื่อว่า "views"
+    // เรายังคงสมมติว่า site-counter มี id = 1 เสมอ
     const entryId = 1; 
 
     try {
-      // 1. ดึงข้อมูลปัจจุบันของ counter
+      // 1. ดึงข้อมูลปัจจุบันเพื่อเอายอดวิวล่าสุด
       const currentEntry = await strapi.entityService.findOne('api::site-counter.site-counter', entryId);
 
       if (!currentEntry) {
-        // ถ้ายังไม่มีข้อมูล counter ให้สร้างใหม่ หรือส่ง error กลับไป
-        // ในที่นี้จะส่ง error กลับไปก่อน
-        return ctx.notFound('Site counter entry not found. Please create an entry with ID 1.');
+        // ถ้าไม่เจอข้อมูลเลย ให้สร้างใหม่พร้อม publishedAt
+        const newEntry = await strapi.entityService.create('api::site-counter.site-counter', {
+            data: {
+                id: entryId, // กำหนด id โดยตรง
+                views: 1,
+                publishedAt: new Date().toISOString(),
+            }
+        });
+        return this.transformResponse(newEntry);
       }
 
-      // 2. คำนวณยอดวิวใหม่ (บวก 1 จากของเดิม)
-      // ตรวจสอบให้แน่ใจว่า field ใน Content-Type ของคุณชื่อ 'views' (หรือเปลี่ยนชื่อตามจริง)
+      // 2. คำนวณยอดวิวใหม่
       const newViews = (currentEntry.views || 0) + 1;
 
-      // 3. อัปเดตข้อมูลในฐานข้อมูลด้วยยอดวิวใหม่
+      // 3. ใช้ 'update' เหมือนเดิม แต่เพิ่มการอัปเดต 'publishedAt' เข้าไป
       const updatedEntry = await strapi.entityService.update('api::site-counter.site-counter', entryId, {
         data: {
           views: newViews,
+          publishedAt: new Date().toISOString(), // <-- ส่วนที่สำคัญที่สุด
         },
       });
-
+      
       // 4. ส่งข้อมูลที่อัปเดตแล้วกลับไป
       return this.transformResponse(updatedEntry);
 
