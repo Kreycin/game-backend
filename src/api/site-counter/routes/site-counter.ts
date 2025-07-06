@@ -13,12 +13,5 @@ export default {
       handler: 'site-counter.increment',
       config: { auth: false },
     },
-    // --- เพิ่ม Route สำหรับทดสอบเข้าไป ---
-    {
-      method: 'GET',
-      path: '/test-write',
-      handler: 'site-counter.testWrite',
-      config: { auth: false },
-    },
   ],
 };
