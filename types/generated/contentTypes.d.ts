@@ -536,7 +536,7 @@ export interface ApiSiteCounterSiteCounter extends Struct.SingleTypeSchema {
     singularName: 'site-counter';
   };
   options: {
-    draftAndPublish: false;
+    draftAndPublish: true;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
