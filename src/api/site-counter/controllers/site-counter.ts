@@ -10,40 +10,30 @@ import { factories } from '@strapi/strapi';
 export default factories.createCoreController('api::site-counter.site-counter', ({ strapi }) => ({
   // ฟังก์ชันสำหรับเพิ่มยอดวิว
   async increment(ctx) {
-    // เรายังคงสมมติว่า site-counter มี id = 1 เสมอ
-    const entryId = 1; 
+    const entryId = 1; // ID ของ Single Type ของเรา
 
     try {
-      // 1. ดึงข้อมูลปัจจุบันเพื่อเอายอดวิวล่าสุด
-      const currentEntry = await strapi.entityService.findOne('api::site-counter.site-counter', entryId);
+      // 1. ดึงข้อมูลล่าสุดโดยตรงจากฐานข้อมูล
+      const currentEntry = await strapi.db.query('api::site-counter.site-counter').findOne({ where: { id: entryId } });
+      
+      // คำนวณยอดวิวใหม่
+      // ถ้าไม่มีข้อมูลเลย ให้เริ่มนับเป็น 1, ถ้ามีแล้วให้บวก 1
+      const newViews = (currentEntry?.views || 0) + 1;
 
-      if (!currentEntry) {
-        // ถ้าไม่เจอข้อมูลเลย ให้สร้างใหม่พร้อม publishedAt
-        const newEntry = await strapi.entityService.create('api::site-counter.site-counter', {
-            data: {
-                id: entryId, // กำหนด id โดยตรง
-                views: 1,
-                publishedAt: new Date().toISOString(),
-            }
-        });
-        return this.transformResponse(newEntry);
-      }
-
-      // 2. คำนวณยอดวิวใหม่
-      const newViews = (currentEntry.views || 0) + 1;
-
-      // 3. ใช้ 'update' เหมือนเดิม แต่เพิ่มการอัปเดต 'publishedAt' เข้าไป
-      const updatedEntry = await strapi.entityService.update('api::site-counter.site-counter', entryId, {
+      // 2. ใช้ "service" ของ content type เพื่อสั่ง "publish"
+      // นี่คือการจำลองการกดปุ่ม Publish ในหน้า Admin Panel ผ่านโค้ด
+      const publishedEntry = await strapi.service('api::site-counter.site-counter').publish(entryId, {
         data: {
           views: newViews,
-          publishedAt: new Date().toISOString(), // <-- ส่วนที่สำคัญที่สุด
         },
       });
-      
-      // 4. ส่งข้อมูลที่อัปเดตแล้วกลับไป
-      return this.transformResponse(updatedEntry);
+
+      // 3. ส่งข้อมูลที่ publish แล้วกลับไป
+      return this.transformResponse(publishedEntry);
 
     } catch (err) {
+      // เพิ่ม Log เพื่อให้เห็น Error ชัดๆ หากเกิดปัญหา
+      console.error('An error occurred in the site-counter increment controller:', err);
       ctx.body = err;
     }
   }
