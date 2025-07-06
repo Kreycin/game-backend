@@ -31,5 +31,29 @@ export default factories.createCoreController('api::site-counter.site-counter', 
       console.error('Error in increment controller:', err);
       ctx.body = err;
     }
+  },
+  // --- เพิ่มฟังก์ชัน testWrite นี้เข้าไป ---
+  async testWrite(ctx) {
+    try {
+      console.log('[TEST] Starting testWrite function...');
+      const randomNumber = Math.floor(Math.random() * 1000) + 1;
+
+      console.log(`[TEST] Attempting to update views to: ${randomNumber}`);
+
+      const updatedEntry = await strapi.db.query('api::site-counter.site-counter').update({
+        where: { id: 1 },
+        data: {
+          views: randomNumber,
+        },
+      });
+
+      console.log('[TEST] Update successful. Returning new value.');
+      return { success: true, updatedData: updatedEntry };
+
+    } catch (err) {
+      console.error('[TEST] An error occurred in testWrite:', err);
+      return { success: false, error: err };
+    }
   }
+  // --- สิ้นสุดส่วนที่เพิ่ม ---
 }));
