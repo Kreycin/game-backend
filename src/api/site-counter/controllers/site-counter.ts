@@ -1,31 +1,36 @@
-// src/api/site-counter/controllers/site-counter.ts (Final Simplified Version)
+// src/api/site-counter/controllers/site-counter.ts (Using db.query)
 'use strict';
 
 import { factories } from '@strapi/strapi';
 
 export default factories.createCoreController('api::site-counter.site-counter', ({ strapi }) => ({
   async increment(ctx) {
-    const entryId = 1;
+    const entryId = 1; // ID ของ Single Type ของเรา
 
     try {
-      const currentEntry = await strapi.db.query('api::site-counter.site-counter').findOne({ where: { id: entryId } });
+      // 1. ค้นหาข้อมูลปัจจุบันโดยใช้ db.query
+      const currentEntry = await strapi.db.query('api::site-counter.site-counter').findOne({
+        where: { id: entryId },
+      });
 
+      // ถ้าไม่เจอข้อมูลเลย (อาจยังไม่เคยสร้างในหน้า Admin) ให้ส่ง Error กลับไป
       if (!currentEntry) {
-        const newEntry = await strapi.entityService.create('api::site-counter.site-counter', {
-          data: { id: entryId, views: 1 }
-        });
-        return this.transformResponse(newEntry);
+        return ctx.notFound('Site counter entry not found. Please create it in the Admin Panel first.');
       }
 
+      // 2. คำนวณยอดวิวใหม่
       const newViews = (currentEntry.views || 0) + 1;
 
-      // ตอนนี้ Draft & Publish ปิดแล้ว การ update จะเป็นการอัปเดตข้อมูลจริงทันที
-      const updatedEntry = await strapi.entityService.update('api::site-counter.site-counter', entryId, {
+      // 3. --- นี่คือส่วนที่แก้ไข ---
+      // ใช้ db.query().update() ซึ่งเป็นการอัปเดตฐานข้อมูลโดยตรง
+      const updatedEntry = await strapi.db.query('api::site-counter.site-counter').update({
+        where: { id: entryId },
         data: {
           views: newViews,
         },
       });
 
+      // 4. ส่งข้อมูลที่อัปเดตแล้วกลับไป
       return this.transformResponse(updatedEntry);
 
     } catch (err) {
