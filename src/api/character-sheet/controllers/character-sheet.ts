@@ -33,11 +33,7 @@ export default {
 
       const entities = await strapi.entityService.findMany('api::character.character', {
         populate: populateOptions,
-        
-        // =======================================================
-        // <<< เพิ่มบรรทัดนี้เพื่อเรียงลำดับข้อมูลตามวันที่เผยแพร่ล่าสุด >>>
-        sort: { publishedAt: 'desc' }
-        // =======================================================
+        sort: { updatedAt: 'desc' }
 
       });
 
