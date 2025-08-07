@@ -28,6 +28,15 @@
     },
     "description": {
       "type": "string"
+    },
+    "condition": {
+      "type": "string"
+    },
+    "condition_detail": {
+      "type": "string"
+    },
+    "highlight": {
+      "type": "text"
     }
   }
 }

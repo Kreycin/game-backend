@@ -16,18 +16,38 @@ export default {
   async findPublic(ctx) {
     try {
       const results = await (strapi as any).entityService.findMany('api::tier-list.tier-list', {
+        // --- นี่คือส่วนที่แก้ไข ---
         populate: {
           tiers: {
             populate: {
-              dps_characters: { populate: { tier_list_character: { populate: 'icon' } } },
-              support_characters: { populate: { tier_list_character: { populate: 'icon' } } },
-              def_characters: { populate: { tier_list_character: { populate: 'icon' } } },
+              dps_characters: { 
+                populate: { 
+                  tier_list_character: { 
+                    // บอกให้ดึงข้อมูล icon และ field ใหม่ๆ ทั้งหมด
+                    populate: ['icon', 'condition', 'condition_detail', 'highlight'] 
+                  } 
+                } 
+              },
+              support_characters: { 
+                populate: { 
+                  tier_list_character: { 
+                    populate: ['icon', 'condition', 'condition_detail', 'highlight'] 
+                  } 
+                } 
+              },
+              def_characters: { 
+                populate: { 
+                  tier_list_character: { 
+                    populate: ['icon', 'condition', 'condition_detail', 'highlight'] 
+                  } 
+                } 
+              },
             },
           },
         },
+        // -------------------------
       });
 
-      // --- นี่คือส่วนที่แก้ไข: เราจะแปลงข้อมูลก่อนส่งกลับไป ---
       const data = results.map(transformEntity);
 
       ctx.body = { data };
