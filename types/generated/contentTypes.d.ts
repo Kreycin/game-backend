@@ -587,6 +587,70 @@ export interface ApiSkillSkill extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiTierListCharacterTierListCharacter
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'tier_list_characters';
+  info: {
+    displayName: 'Tier List Character';
+    pluralName: 'tier-list-characters';
+    singularName: 'tier-list-character';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.String;
+    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::tier-list-character.tier-list-character'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTierListTierList extends Struct.CollectionTypeSchema {
+  collectionName: 'tier_lists';
+  info: {
+    displayName: 'Tier List';
+    pluralName: 'tier-lists';
+    singularName: 'tier-list';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    game_mode: Schema.Attribute.Enumeration<['Mode 3v3', 'mode 5v5']> &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::tier-list.tier-list'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    tiers: Schema.Attribute.Component<'tier-list.tier-row', true>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -1102,6 +1166,8 @@ declare module '@strapi/strapi' {
       'api::enhancement.enhancement': ApiEnhancementEnhancement;
       'api::site-counter.site-counter': ApiSiteCounterSiteCounter;
       'api::skill.skill': ApiSkillSkill;
+      'api::tier-list-character.tier-list-character': ApiTierListCharacterTierListCharacter;
+      'api::tier-list.tier-list': ApiTierListTierList;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

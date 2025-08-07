@@ -34,11 +34,54 @@ export interface SkillDescriptionByLevelsSkillDescriptionByLevel
   };
 }
 
+export interface TierListTierCharacterEntry extends Struct.ComponentSchema {
+  collectionName: 'components_tier_list_tier_character_entries';
+  info: {
+    displayName: 'TierCharacterEntry';
+    icon: 'archive';
+  };
+  attributes: {
+    expert_bonus: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    tier_list_character: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::tier-list-character.tier-list-character'
+    >;
+  };
+}
+
+export interface TierListTierRow extends Struct.ComponentSchema {
+  collectionName: 'components_tier_list_tier_rows';
+  info: {
+    displayName: 'TierRow';
+    icon: 'chartBubble';
+  };
+  attributes: {
+    def_characters: Schema.Attribute.Component<
+      'tier-list.tier-character-entry',
+      true
+    >;
+    dps_characters: Schema.Attribute.Component<
+      'tier-list.tier-character-entry',
+      true
+    >;
+    support_characters: Schema.Attribute.Component<
+      'tier-list.tier-character-entry',
+      true
+    >;
+    tier_level: Schema.Attribute.Enumeration<
+      ['T0', 'T0.5', 'T1', 'T1.5', 'T2', 'T3', 'T4', 'T5']
+    >;
+    tier_name: Schema.Attribute.String;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'character.star-level-data': CharacterStarLevelData;
       'skill-description-by-levels.skill-description-by-level': SkillDescriptionByLevelsSkillDescriptionByLevel;
+      'tier-list.tier-character-entry': TierListTierCharacterEntry;
+      'tier-list.tier-row': TierListTierRow;
     }
   }
 }

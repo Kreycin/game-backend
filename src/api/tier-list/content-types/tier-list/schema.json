@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tier_lists",
+  "info": {
+    "singularName": "tier-list",
+    "pluralName": "tier-lists",
+    "displayName": "Tier List"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "game_mode": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "Mode 3v3",
+        "mode 5v5"
+      ]
+    },
+    "tiers": {
+      "type": "component",
+      "component": "tier-list.tier-row",
+      "repeatable": true
+    }
+  }
+}
