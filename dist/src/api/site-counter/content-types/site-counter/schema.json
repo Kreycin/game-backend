@@ -1,0 +1,18 @@
+{
+    "kind": "singleType",
+    "collectionName": "site_counters",
+    "info": {
+        "singularName": "site-counter",
+        "pluralName": "site-counters",
+        "displayName": "SiteCounter"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "views": {
+            "type": "integer"
+        }
+    }
+}

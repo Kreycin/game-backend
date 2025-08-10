@@ -1,0 +1,38 @@
+{
+    "kind": "collectionType",
+    "collectionName": "effects",
+    "info": {
+        "singularName": "effect",
+        "pluralName": "effects",
+        "displayName": "Effect"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "Effect_Name": {
+            "type": "string",
+            "required": true
+        },
+        "Effect_Icon": {
+            "type": "media",
+            "multiple": false,
+            "allowedTypes": [
+                "images",
+                "files",
+                "videos",
+                "audios"
+            ]
+        },
+        "Description": {
+            "type": "blocks"
+        },
+        "skills": {
+            "type": "relation",
+            "relation": "manyToMany",
+            "target": "api::skill.skill",
+            "mappedBy": "effects"
+        }
+    }
+}

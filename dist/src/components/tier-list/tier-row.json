@@ -1,0 +1,42 @@
+{
+    "collectionName": "components_tier_list_tier_rows",
+    "info": {
+        "displayName": "TierRow",
+        "icon": "chartBubble"
+    },
+    "options": {},
+    "attributes": {
+        "tier_level": {
+            "type": "enumeration",
+            "enum": [
+                "T0",
+                "T0.5",
+                "T1",
+                "T1.5",
+                "T2",
+                "T3",
+                "T4",
+                "T5"
+            ]
+        },
+        "tier_name": {
+            "type": "string"
+        },
+        "dps_characters": {
+            "type": "component",
+            "component": "tier-list.tier-character-entry",
+            "repeatable": true
+        },
+        "support_characters": {
+            "type": "component",
+            "component": "tier-list.tier-character-entry",
+            "repeatable": true
+        },
+        "def_characters": {
+            "type": "component",
+            "component": "tier-list.tier-character-entry",
+            "repeatable": true
+        }
+    },
+    "config": {}
+}

@@ -1,0 +1,42 @@
+{
+    "kind": "collectionType",
+    "collectionName": "tier_list_characters",
+    "info": {
+        "singularName": "tier-list-character",
+        "pluralName": "tier-list-characters",
+        "displayName": "Tier List Character"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "name": {
+            "type": "string",
+            "required": true,
+            "unique": true
+        },
+        "icon": {
+            "type": "media",
+            "multiple": false,
+            "allowedTypes": [
+                "images",
+                "files",
+                "videos",
+                "audios"
+            ]
+        },
+        "description": {
+            "type": "string"
+        },
+        "condition": {
+            "type": "string"
+        },
+        "condition_detail": {
+            "type": "string"
+        },
+        "highlight": {
+            "type": "text"
+        }
+    }
+}

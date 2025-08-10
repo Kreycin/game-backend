@@ -1,0 +1,20 @@
+{
+    "collectionName": "components_tier_list_tier_character_entries",
+    "info": {
+        "displayName": "TierCharacterEntry",
+        "icon": "archive"
+    },
+    "options": {},
+    "attributes": {
+        "tier_list_character": {
+            "type": "relation",
+            "relation": "oneToOne",
+            "target": "api::tier-list-character.tier-list-character"
+        },
+        "expert_bonus": {
+            "type": "integer",
+            "default": 0
+        }
+    },
+    "config": {}
+}

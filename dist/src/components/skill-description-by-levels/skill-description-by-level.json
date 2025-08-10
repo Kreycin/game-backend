@@ -1,0 +1,19 @@
+{
+    "collectionName": "components_skill_description_by_levels_skill_description_by_levels",
+    "info": {
+        "displayName": "Skill_Description_By_Level",
+        "icon": "star"
+    },
+    "options": {},
+    "attributes": {
+        "skill": {
+            "type": "relation",
+            "relation": "oneToOne",
+            "target": "api::skill.skill"
+        },
+        "Description": {
+            "type": "blocks"
+        }
+    },
+    "config": {}
+}

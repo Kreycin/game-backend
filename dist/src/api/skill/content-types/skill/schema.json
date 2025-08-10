@@ -1,0 +1,41 @@
+{
+    "kind": "collectionType",
+    "collectionName": "skills",
+    "info": {
+        "singularName": "skill",
+        "pluralName": "skills",
+        "displayName": "Skill"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "Skill_Name": {
+            "type": "string",
+            "required": true
+        },
+        "Skill_Icon": {
+            "type": "media",
+            "multiple": false,
+            "allowedTypes": [
+                "images",
+                "files",
+                "videos",
+                "audios"
+            ]
+        },
+        "Skill_Type": {
+            "type": "string"
+        },
+        "Skill_Level": {
+            "type": "integer"
+        },
+        "effects": {
+            "type": "relation",
+            "relation": "manyToMany",
+            "target": "api::effect.effect",
+            "inversedBy": "skills"
+        }
+    }
+}
