@@ -13,7 +13,6 @@ module.exports = [
             'data:',
             'blob:',
             'market-assets.strapi.io',
-            // เพิ่มโดเมนของ Cloudinary เข้าไปในรายการที่อนุญาต
             'res.cloudinary.com',
           ],
           'media-src': [
@@ -21,7 +20,6 @@ module.exports = [
             'data:',
             'blob:',
             'market-assets.strapi.io',
-            // เพิ่มโดเมนของ Cloudinary เข้าไปในรายการที่อนุญาต
             'res.cloudinary.com',
           ],
           upgradeInsecureRequests: null,
@@ -29,7 +27,6 @@ module.exports = [
       },
     },
   },
-  // vvvv นี่คือส่วนที่แก้ไข vvvv
   {
     name: 'strapi::cors',
     config: {
@@ -42,10 +39,16 @@ module.exports = [
       ]
     }
   },
-  // ^^^^ สิ้นสุดส่วนที่แก้ไข ^^^^
   'strapi::poweredBy',
   'strapi::logger',
-  'strapi::query',
+  {
+    name: 'strapi::query',
+    config: {
+      qs: {
+        depth: 10,
+      },
+    },
+  },
   'strapi::body',
   'strapi::session',
   'strapi::favicon',
