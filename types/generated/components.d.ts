@@ -41,7 +41,11 @@ export interface TierListTierCharacterEntry extends Struct.ComponentSchema {
     icon: 'archive';
   };
   attributes: {
+    condition: Schema.Attribute.String;
+    condition_detail: Schema.Attribute.String;
     expert_bonus: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    expert_tag_description: Schema.Attribute.Text;
+    highlight: Schema.Attribute.Text;
     tier_list_character: Schema.Attribute.Relation<
       'oneToOne',
       'api::tier-list-character.tier-list-character'

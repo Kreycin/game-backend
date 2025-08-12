@@ -14,6 +14,18 @@
     "expert_bonus": {
       "type": "integer",
       "default": 0
+    },
+    "expert_tag_description": {
+      "type": "text"
+    },
+    "condition": {
+      "type": "string"
+    },
+    "condition_detail": {
+      "type": "string"
+    },
+    "highlight": {
+      "type": "text"
     }
   },
   "config": {}

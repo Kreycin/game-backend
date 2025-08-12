@@ -3,29 +3,7 @@ module.exports = [
   'strapi::errors',
   {
     name: 'strapi::security',
-    config: {
-      contentSecurityPolicy: {
-        useDefaults: true,
-        directives: {
-          'connect-src': ["'self'", 'http:', 'https:'],
-          'img-src': [
-            "'self'",
-            'data:',
-            'blob:',
-            'market-assets.strapi.io',
-            'res.cloudinary.com',
-          ],
-          'media-src': [
-            "'self'",
-            'data:',
-            'blob:',
-            'market-assets.strapi.io',
-            'res.cloudinary.com',
-          ],
-          upgradeInsecureRequests: null,
-        },
-      },
-    },
+    config: { /* ... */ },
   },
   {
     name: 'strapi::cors',
@@ -33,22 +11,14 @@ module.exports = [
       headers: '*',
       origin: [
         'http://localhost:1337',
-        'http://localhost:5173',
-        'https://demonslayerhub.vercel.app',
-        'https://newcharacterleaked.vercel.app'
+        'http://localhost:5173', // สำหรับ Local Dev
+        'https://newcharacterleaked.vercel.app' // สำหรับ Production
       ]
     }
   },
   'strapi::poweredBy',
   'strapi::logger',
-  {
-    name: 'strapi::query',
-    config: {
-      qs: {
-        depth: 10,
-      },
-    },
-  },
+  'strapi::query', // กลับไปใช้แบบง่ายๆ ได้
   'strapi::body',
   'strapi::session',
   'strapi::favicon',
