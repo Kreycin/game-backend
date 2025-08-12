@@ -12,7 +12,8 @@ module.exports = [
             origin: [
                 'http://localhost:1337',
                 'http://localhost:5173', // สำหรับ Local Dev
-                'https://newcharacterleaked.vercel.app' // สำหรับ Production
+                'https://newcharacterleaked.vercel.app',
+                'https://demonslayerhub.vercel.app' // สำหรับ Production
             ]
         }
     },
