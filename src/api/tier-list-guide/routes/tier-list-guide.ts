@@ -1,7 +1,17 @@
+'use strict';
+
 /**
  * tier-list-guide router
  */
 
-import { factories } from '@strapi/strapi';
+const { createCoreRouter } = require('@strapi/strapi').factories;
 
-export default factories.createCoreRouter('api::tier-list-guide.tier-list-guide');
+// เราจะแก้ไขส่วนนี้เพื่อทำให้ API เป็น Public
+export default createCoreRouter('api::tier-list-guide.tier-list-guide', {
+  config: {
+    find: {
+      // ทำให้ find (การดึงข้อมูล) ไม่ต้องใช้ token หรือการยืนยันตัวตน
+      auth: false,
+    },
+  },
+});
