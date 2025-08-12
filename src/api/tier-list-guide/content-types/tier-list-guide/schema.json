@@ -1,0 +1,30 @@
+{
+  "kind": "singleType",
+  "collectionName": "tier_list_guides",
+  "info": {
+    "singularName": "tier-list-guide",
+    "pluralName": "tier-list-guides",
+    "displayName": "Tier List Guide"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "criteria": {
+      "type": "blocks"
+    },
+    "roles": {
+      "type": "blocks"
+    },
+    "ratings": {
+      "type": "blocks"
+    },
+    "tags": {
+      "type": "blocks"
+    },
+    "credit_name": {
+      "type": "string"
+    }
+  }
+}

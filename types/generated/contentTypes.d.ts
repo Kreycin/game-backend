@@ -649,6 +649,38 @@ export interface ApiTierListCharacterTierListCharacter
   };
 }
 
+export interface ApiTierListGuideTierListGuide extends Struct.SingleTypeSchema {
+  collectionName: 'tier_list_guides';
+  info: {
+    displayName: 'Tier List Guide';
+    pluralName: 'tier-list-guides';
+    singularName: 'tier-list-guide';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    credit_name: Schema.Attribute.String;
+    criteria: Schema.Attribute.Blocks;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::tier-list-guide.tier-list-guide'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    ratings: Schema.Attribute.Blocks;
+    roles: Schema.Attribute.Blocks;
+    tags: Schema.Attribute.Blocks;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiTierListTierList extends Struct.CollectionTypeSchema {
   collectionName: 'tier_lists';
   info: {
@@ -1229,6 +1261,7 @@ declare module '@strapi/strapi' {
       'api::site-counter.site-counter': ApiSiteCounterSiteCounter;
       'api::skill.skill': ApiSkillSkill;
       'api::tier-list-character.tier-list-character': ApiTierListCharacterTierListCharacter;
+      'api::tier-list-guide.tier-list-guide': ApiTierListGuideTierListGuide;
       'api::tier-list.tier-list': ApiTierListTierList;
       'api::user-profile.user-profile': ApiUserProfileUserProfile;
       'plugin::content-releases.release': PluginContentReleasesRelease;
