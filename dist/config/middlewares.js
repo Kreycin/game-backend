@@ -1,9 +1,33 @@
+"use strict";
 // config/middlewares.ts
-module.exports = [
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = [
     'strapi::errors',
     {
         name: 'strapi::security',
-        config: { /* ... */},
+        config: {
+            contentSecurityPolicy: {
+                useDefaults: true,
+                directives: {
+                    'connect-src': ["'self'", 'https:'],
+                    'img-src': [
+                        "'self'",
+                        'data:',
+                        'blob:',
+                        'market-assets.strapi.io',
+                        'res.cloudinary.com', // <-- เพิ่มโดเมนของ Cloudinary
+                    ],
+                    'media-src': [
+                        "'self'",
+                        'data:',
+                        'blob:',
+                        'market-assets.strapi.io',
+                        'res.cloudinary.com', // <-- และเพิ่มที่นี่ด้วย
+                    ],
+                    upgradeInsecureRequests: null,
+                },
+            },
+        },
     },
     {
         name: 'strapi::cors',
@@ -11,15 +35,15 @@ module.exports = [
             headers: '*',
             origin: [
                 'http://localhost:1337',
-                'http://localhost:5173', // สำหรับ Local Dev
+                'http://localhost:5173',
                 'https://newcharacterleaked.vercel.app',
-                'https://demonslayerhub.vercel.app' // สำหรับ Production
+                'https://demonslayerhub.vercel.app'
             ]
         }
     },
     'strapi::poweredBy',
     'strapi::logger',
-    'strapi::query', // กลับไปใช้แบบง่ายๆ ได้
+    'strapi::query',
     'strapi::body',
     'strapi::session',
     'strapi::favicon',
