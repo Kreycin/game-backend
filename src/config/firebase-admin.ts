@@ -3,8 +3,6 @@
 import * as admin from 'firebase-admin';
 import * as path from 'path';
 
-// **สำคัญ:** ตรวจสอบให้แน่ใจว่า path ไปยัง service account key ของคุณถูกต้อง
-// path นี้อ้างอิงจากโฟลเดอร์ config นอกสุด ไม่ใช่ใน src
 const serviceAccountPath = path.resolve(
   __dirname,
   '../../../config/firebase-service-account.json'

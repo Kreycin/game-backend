@@ -25,8 +25,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 const admin = __importStar(require("firebase-admin"));
 const path = __importStar(require("path"));
-// **สำคัญ:** ตรวจสอบให้แน่ใจว่า path ไปยัง service account key ของคุณถูกต้อง
-// path นี้อ้างอิงจากโฟลเดอร์ config นอกสุด ไม่ใช่ใน src
 const serviceAccountPath = path.resolve(__dirname, '../../../config/firebase-service-account.json');
 let app;
 // ป้องกันการ initializeApp ซ้ำซ้อนตอน hot-reload
