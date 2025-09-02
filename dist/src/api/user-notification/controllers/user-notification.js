@@ -1,0 +1,59 @@
+// src/api/user-notification/controllers/user-notification.ts
+'use strict';
+Object.defineProperty(exports, "__esModule", { value: true });
+const strapi_1 = require("@strapi/strapi");
+exports.default = strapi_1.factories.createCoreController('api::user-notification.user-notification', ({ strapi }) => ({
+    /**
+     * Custom 'upsert' action.
+     * New Logic: Ensures one FCM token exists only once in the database.
+     */
+    async upsert(ctx) {
+        const { user } = ctx.state;
+        if (!user) {
+            return ctx.unauthorized('You must be logged in.');
+        }
+        const { fcmToken, selectedServer } = ctx.request.body;
+        if (!fcmToken || !selectedServer) {
+            return ctx.badRequest('fcmToken and selectedServer are required.');
+        }
+        try {
+            const notificationQuery = strapi.db.query('api::user-notification.user-notification');
+            // 1. ค้นหาด้วย fcmToken ก่อน เพื่อให้แน่ใจว่า Token นี้ไม่ซ้ำ
+            const existingEntryByToken = await notificationQuery.findOne({
+                where: { fcmToken },
+            });
+            if (existingEntryByToken) {
+                // 2. ถ้าเจอ Token นี้อยู่แล้ว ให้อัปเดตข้อมูลเป็นของ User คนปัจจุบัน
+                const updatedEntry = await notificationQuery.update({
+                    where: { id: existingEntryByToken.id },
+                    data: {
+                        selectedServer,
+                        user: user.id, // อัปเดตให้เป็นของ user คนล่าสุดที่ใช้ token นี้
+                    },
+                });
+                console.log(`[Notification] Updated settings for existing token, user: ${user.id}`);
+                return ctx.send(updatedEntry);
+            }
+            else {
+                // 3. ถ้าไม่เจอ Token นี้ ให้ลบของเก่าของ User คนนี้ (ถ้ามี) แล้วสร้างใหม่
+                //    (ป้องกันกรณี User เปลี่ยนอุปกรณ์/เบราว์เซอร์)
+                await notificationQuery.delete({
+                    where: { user: user.id },
+                });
+                const newEntry = await notificationQuery.create({
+                    data: {
+                        fcmToken,
+                        selectedServer,
+                        user: user.id,
+                    },
+                });
+                console.log(`[Notification] Created new settings for user: ${user.id}`);
+                return ctx.send(newEntry);
+            }
+        }
+        catch (error) {
+            console.error('Error in user-notification upsert:', error);
+            return ctx.internalServerError('An error occurred while saving notification settings.');
+        }
+    },
+}));

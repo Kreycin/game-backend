@@ -1,0 +1,36 @@
+{
+    "kind": "collectionType",
+    "collectionName": "user_notifications",
+    "info": {
+        "singularName": "user-notification",
+        "pluralName": "user-notifications",
+        "displayName": "User Notification"
+    },
+    "options": {
+        "draftAndPublish": false
+    },
+    "attributes": {
+        "fcmToken": {
+            "type": "text",
+            "required": true,
+            "private": true
+        },
+        "selectedServer": {
+            "type": "enumeration",
+            "enum": [
+                "china",
+                "s_servers",
+                "n_servers",
+                "na_servers",
+                "t_servers"
+            ],
+            "required": true
+        },
+        "user": {
+            "type": "relation",
+            "relation": "oneToOne",
+            "target": "plugin::users-permissions.user",
+            "private": false
+        }
+    }
+}

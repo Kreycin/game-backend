@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "game_events",
+  "info": {
+    "singularName": "game-event",
+    "pluralName": "game-events",
+    "displayName": "Game Event"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "eventName": {
+      "type": "string",
+      "required": true
+    },
+    "eventMessage": {
+      "type": "text",
+      "required": true,
+      "description": "e.g., It's time for Guild Boss!"
+    },
+    "server": {
+      "type": "enumeration",
+      "enum": [
+        "china",
+        "s_servers",
+        "n_servers",
+        "na_servers",
+        "t_servers"
+      ],
+      "required": true
+    },
+    "eventType": {
+      "type": "enumeration",
+      "enum": [
+        "Daily",
+        "Weekly"
+      ],
+      "required": true
+    },
+    "timeUTC": {
+      "type": "time",
+      "required": true,
+      "description": "Use UTC time (HH:mm:ss.SSS)"
+    },
+    "dayOfWeekUTC": {
+      "type": "integer",
+      "min": 0,
+      "max": 6,
+      "description": "For Weekly events. 0 = Sunday, 1 = Monday, ..., 6 = Saturday"
+    }
+  }
+}

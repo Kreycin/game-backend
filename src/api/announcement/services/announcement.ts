@@ -1,0 +1,5 @@
+/**
+ * announcement service
+ */
+
+export default () => ({});

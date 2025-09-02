@@ -410,6 +410,41 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAnnouncementAnnouncement
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'announcements';
+  info: {
+    displayName: 'Instant Announcement';
+    pluralName: 'announcements';
+    singularName: 'announcement';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::announcement.announcement'
+    > &
+      Schema.Attribute.Private;
+    message: Schema.Attribute.Text & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    server: Schema.Attribute.Enumeration<
+      ['all', 'china', 's_servers', 'n_servers', 'na_servers', 't_servers']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'all'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiBuildBuild extends Struct.CollectionTypeSchema {
   collectionName: 'builds';
   info: {
@@ -552,6 +587,50 @@ export interface ApiEnhancementEnhancement extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiGameEventGameEvent extends Struct.CollectionTypeSchema {
+  collectionName: 'game_events';
+  info: {
+    displayName: 'Game Event';
+    pluralName: 'game-events';
+    singularName: 'game-event';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    dayOfWeekUTC: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 6;
+          min: 0;
+        },
+        number
+      >;
+    eventMessage: Schema.Attribute.Text & Schema.Attribute.Required;
+    eventName: Schema.Attribute.String & Schema.Attribute.Required;
+    eventType: Schema.Attribute.Enumeration<['Daily', 'Weekly']> &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::game-event.game-event'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    server: Schema.Attribute.Enumeration<
+      ['china', 's_servers', 'n_servers', 'na_servers', 't_servers']
+    > &
+      Schema.Attribute.Required;
+    timeUTC: Schema.Attribute.Time & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -709,6 +788,45 @@ export interface ApiTierListTierList extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiUserNotificationUserNotification
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'user_notifications';
+  info: {
+    displayName: 'User Notification';
+    pluralName: 'user-notifications';
+    singularName: 'user-notification';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    fcmToken: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-notification.user-notification'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    selectedServer: Schema.Attribute.Enumeration<
+      ['china', 's_servers', 'n_servers', 'na_servers', 't_servers']
+    > &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
@@ -1254,15 +1372,18 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::announcement.announcement': ApiAnnouncementAnnouncement;
       'api::build.build': ApiBuildBuild;
       'api::character.character': ApiCharacterCharacter;
       'api::effect.effect': ApiEffectEffect;
       'api::enhancement.enhancement': ApiEnhancementEnhancement;
+      'api::game-event.game-event': ApiGameEventGameEvent;
       'api::site-counter.site-counter': ApiSiteCounterSiteCounter;
       'api::skill.skill': ApiSkillSkill;
       'api::tier-list-character.tier-list-character': ApiTierListCharacterTierListCharacter;
       'api::tier-list-guide.tier-list-guide': ApiTierListGuideTierListGuide;
       'api::tier-list.tier-list': ApiTierListTierList;
+      'api::user-notification.user-notification': ApiUserNotificationUserNotification;
       'api::user-profile.user-profile': ApiUserProfileUserProfile;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
