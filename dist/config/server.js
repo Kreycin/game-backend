@@ -65,17 +65,19 @@ const cronTasks = {
     },
 };
 // 2. Export ค่า Config ทั้งหมดออกมา
+// kreycin/game-backend/config/server.ts
 exports.default = ({ env }) => ({
     host: env('HOST', '0.0.0.0'),
     port: env.int('PORT', 1337),
+    url: env('URL'), // เพิ่มบรรทัดนี้
     app: {
         keys: env.array('APP_KEYS'),
     },
     webhooks: {
         populateRelations: env.bool('WEBHOOKS_POPULATE_RELATIONS', false),
     },
-    cron: {
-        enabled: true,
-        tasks: cronTasks, // ส่ง task ที่เราสร้างไว้เข้าไป
+    // เพิ่มส่วนนี้เข้าไปทั้งหมด
+    admin: {
+        serveAdminPanel: true,
     },
 });
