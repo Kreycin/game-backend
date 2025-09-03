@@ -92,4 +92,7 @@ export default ({ env }) => ({
   admin: {
     serveAdminPanel: true,
   },
+  cron: {
+    enabled: true,
+  },
 });
