@@ -15,7 +15,14 @@ export default factories.createCoreController('api::user-notification.user-notif
     }
 
     const { fcmToken, selectedServer } = ctx.request.body as { fcmToken: string; selectedServer: string; };
+
+    // --- [จุดดีบักที่เพิ่มเข้ามา] ---
+    // Log fcmToken ที่ได้รับมาทันที เพื่อตรวจสอบว่าค่าที่ได้จาก Frontend ถูกต้องหรือไม่
+    console.log(`[DEBUG] upsert: Received fcmToken for user ${user.id}: "${fcmToken}"`);
+    // ---
+
     if (!fcmToken || !selectedServer) {
+      console.warn(`[DEBUG] upsert: Missing data for user ${user.id}. Token or Server empty.`);
       return ctx.badRequest('fcmToken and selectedServer are required.');
     }
 
@@ -33,14 +40,14 @@ export default factories.createCoreController('api::user-notification.user-notif
           where: { id: existingEntryByToken.id },
           data: {
             selectedServer,
-            user: user.id, // อัปเดตให้เป็นของ user คนล่าสุดที่ใช้ token นี้
+            user: user.id,
           },
         });
+        // Log เดิมของคุณดีอยู่แล้ว
         console.log(`[Notification] Updated settings for existing token, user: ${user.id}`);
         return ctx.send(updatedEntry);
       } else {
         // 3. ถ้าไม่เจอ Token นี้ ให้ลบของเก่าของ User คนนี้ (ถ้ามี) แล้วสร้างใหม่
-        //    (ป้องกันกรณี User เปลี่ยนอุปกรณ์/เบราว์เซอร์)
         await notificationQuery.delete({
           where: { user: user.id },
         });
@@ -52,11 +59,12 @@ export default factories.createCoreController('api::user-notification.user-notif
             user: user.id,
           },
         });
+        // Log เดิมของคุณดีอยู่แล้ว
         console.log(`[Notification] Created new settings for user: ${user.id}`);
         return ctx.send(newEntry);
       }
     } catch (error) {
-      console.error('Error in user-notification upsert:', error);
+      console.error('[Error] user-notification upsert failed:', error);
       return ctx.internalServerError('An error occurred while saving notification settings.');
     }
   },
