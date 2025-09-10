@@ -1,27 +1,25 @@
 // src/index.ts
 'use strict';
 
-import path from 'path';
+// สร้าง Set สำหรับป้องกันการแจ้งเตือนซ้ำซ้อน
+const processedAnnouncements = new Set();
 
 export default {
   bootstrap({ strapi }) {
-    // --- Firebase เหมือนเดิม ---
-    try {
-      const firebaseAdminPath = path.resolve(__dirname, 'config', 'firebase-admin.js');
-      const firebaseApp = require(firebaseAdminPath);
-      strapi.firebase = firebaseApp;
-      console.log('✅ Firebase Admin has been initialized and is ready.');
-    } catch (error) {
-      console.error('❌ Failed to initialize Firebase Admin in bootstrap:', error);
-    }
-
-    // --- ระบบ "ประกาศทันที" เวอร์ชันสมบูรณ์ ---
-    console.log('🚀 Setting up Instant Announcement listener...');
     strapi.eventHub.on('entry.publish', async ({ model, entry }) => {
+      try {
+        // [แก้ไข] เปลี่ยนเงื่อนไขให้ถูกต้องและรัดกุม
+        if (model.singularName !== 'announcement') {
+          return;
+        }
 
-      // --- FIX: เปลี่ยนเงื่อนไขให้ตรงกับข้อมูลที่เจอ ---
-      if (model === 'announcement') {
-      // ---------------------------------------------
+        // [เพิ่ม] Logic ป้องกันการทำงานซ้ำ
+        if (processedAnnouncements.has(entry.id)) {
+          console.log(`[EventHub] 🟡 Ignoring duplicate publish event for announcement ID: ${entry.id}`);
+          return;
+        }
+        processedAnnouncements.add(entry.id);
+
         console.log(`[EventHub] 📢 Announcement published: "${entry.title}"`);
 
         const { title, message, server } = entry;
@@ -41,6 +39,14 @@ export default {
           console.log(`[EventHub] 🚀 Sending announcement to ${tokens.length} device(s)...`);
           await strapi.service('api::notification-service.notification').send(tokens, payload);
         }
+
+        // ลบ ID ออกหลังจากผ่านไป 5 วินาที
+        setTimeout(() => {
+          processedAnnouncements.delete(entry.id);
+        }, 5000);
+
+      } catch (error) {
+        console.error('[EventHub] Error during entry.publish event:', error);
       }
     });
   },
