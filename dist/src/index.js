@@ -1,68 +1,71 @@
 // src/index.ts
 'use strict';
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const path_1 = __importDefault(require("path"));
-// [เพิ่ม] สร้าง Set ด้านนอกเพื่อ "จำ" ID ที่ถูก xử lý ไปแล้ว
 const processedEntryIds = new Set();
 exports.default = {
     bootstrap({ strapi }) {
-        // --- Firebase เหมือนเดิม (ไม่มีการเปลี่ยนแปลง) ---
-        try {
-            const firebaseAdminPath = path_1.default.resolve(__dirname, 'config', 'firebase-admin.js');
-            const firebaseApp = require(firebaseAdminPath);
-            strapi.firebase = firebaseApp;
-            console.log('✅ Firebase Admin has been initialized and is ready.');
-        }
-        catch (error) {
-            console.error('❌ Failed to initialize Firebase Admin in bootstrap:', error);
-        }
-        // --- ระบบ "ประกาศทันที" ที่เพิ่มการป้องกันการยิงซ้ำ ---
-        console.log('🚀 Setting up Instant Announcement listener with duplicate protection...');
+        console.log('🚀 Setting up event listeners with duplicate protection...');
         strapi.eventHub.on('entry.publish', async ({ model, entry }) => {
+            // --- Log สำหรับตรวจสอบ: เริ่มต้น ---
+            console.log('--- [Event: entry.publish] Received ---');
+            console.log('[LOG] Event triggered for model:', model.singularName);
+            console.log('[LOG] Entry ID:', entry ? entry.id : 'No Entry ID');
+            // ------------------------------------
             try {
-                // [เพิ่ม] Logic ป้องกันการทำงานซ้ำ
-                if (processedEntryIds.has(entry.id)) {
-                    console.log(`[EventHub] 🟡 Ignoring duplicate event for ID: ${entry.id}`);
-                    return; // ถ้า ID นี้เคยถูก xử lý แล้วใน 5 วินาทีที่ผ่านมา ให้ออกทันที
+                if (!entry || !entry.id) {
+                    console.log('[LOG] 🔴 Entry or Entry ID is missing. Aborting.');
+                    return;
                 }
-                // ถ้ายังไม่เคย ให้ "จดจำ" ID นี้ไว้ก่อน
+                // --- Log สำหรับตรวจสอบ: การป้องกันซ้ำซ้อน ---
+                console.log('[LOG] Checking for duplicate entry...');
+                if (processedEntryIds.has(entry.id)) {
+                    console.log(`[LOG] 🟡 Duplicate detected for ID: ${entry.id}. Ignoring.`);
+                    return;
+                }
                 processedEntryIds.add(entry.id);
-                // [แก้ไข] เปลี่ยนเงื่อนไขการเช็ค model ให้ถูกต้อง
+                console.log(`[LOG] ✅ Entry ID ${entry.id} is new. Proceeding.`);
+                // ---------------------------------------------
                 if (model.singularName === 'announcement') {
-                    // --- โค้ดเดิมของคุณ (ไม่มีการเปลี่ยนแปลง) ---
-                    console.log(`[EventHub] 📢 Announcement published: "${entry.title}"`);
+                    console.log(`[LOG] ✅ Model is 'announcement'. Processing notification logic.`);
                     const { title, message, server } = entry;
                     const query = strapi.db.query('api::user-notification.user-notification');
                     const whereClause = server === 'all' ? {} : { selectedServer: server };
+                    // --- Log สำหรับตรวจสอบ: การค้นหาผู้ใช้ ---
+                    console.log(`[LOG] 🔍 Querying for users with server: '${server}'`);
                     const userNotifications = await query.findMany({ where: whereClause, select: ['fcmToken'] });
-                    if (userNotifications.length === 0) {
-                        console.log(`[EventHub] 📪 No users found for server: '${server}'`);
-                        // [แก้ไข] ต้อง return ออกจากฟังก์ชันเมื่อไม่เจอผู้ใช้
-                        // และต้องลบ ID ออกจาก Set ด้วยเพื่อให้ลองใหม่ได้
-                        processedEntryIds.delete(entry.id);
-                        return;
+                    console.log(`[LOG] 📝 Found ${userNotifications ? userNotifications.length : 0} user notification entries.`);
+                    // -----------------------------------------
+                    if (!userNotifications || userNotifications.length === 0) {
+                        console.log(`[LOG] 📪 No users found. Job finished for this entry.`);
                     }
-                    const tokens = userNotifications.map(sub => sub.fcmToken).filter(Boolean);
-                    if (tokens.length > 0) {
-                        const payload = { title, body: message };
-                        console.log(`[EventHub] 🚀 Sending announcement to ${tokens.length} device(s)...`);
-                        await strapi.service('api::notification-service.notification').send(tokens, payload);
+                    else {
+                        const tokens = userNotifications.map(sub => sub.fcmToken).filter(Boolean);
+                        console.log(`[LOG] 📱 Found ${tokens.length} valid FCM tokens.`);
+                        if (tokens.length > 0) {
+                            const payload = { title, body: message };
+                            // --- Log สำหรับตรวจสอบ: การส่ง Notification ---
+                            console.log(`[LOG] 🚀 Preparing to send notification...`);
+                            await strapi.service('api::notification-service.notification').send(tokens, payload);
+                            console.log(`[LOG] ✅ Notification sent successfully.`);
+                            // ------------------------------------------
+                        }
                     }
                 }
-                // [เพิ่ม] หลังจาก 5 วินาที ให้ "ลืม" ID นี้
+                else {
+                    console.log(`[LOG] ⚪️ Model is not 'announcement' (${model.singularName}). Skipping.`);
+                }
                 setTimeout(() => {
                     processedEntryIds.delete(entry.id);
-                }, 5000); // 5 วินาที
+                    // --- Log สำหรับตรวจสอบ: การลบ ID ---
+                    console.log(`[LOG] 🕒 Cleared ID ${entry.id} from duplicate check set after 5 seconds.`);
+                    // ------------------------------------
+                }, 5000);
             }
             catch (error) {
-                // [เพิ่ม] หากเกิด Error ให้ "ลืม" ID นี้ทันที
                 if (entry && entry.id) {
                     processedEntryIds.delete(entry.id);
                 }
-                console.error('[EventHub] Error during entry.publish event:', error);
+                console.error('[LOG] ❌ An error occurred in the event handler:', error);
             }
         });
     },

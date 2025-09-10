@@ -1,5 +1,13 @@
-// api/announcement/controllers/announcement.ts
+/**
+ * A set of functions called "actions" for `announcement`
+ */
 
-import { factories } from '@strapi/strapi';
-
-export default factories.createCoreController('api::announcement.announcement');
+export default {
+  // exampleAction: async (ctx, next) => {
+  //   try {
+  //     ctx.body = 'ok';
+  //   } catch (err) {
+  //     ctx.body = err;
+  //   }
+  // }
+};
