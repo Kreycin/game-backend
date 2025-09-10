@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const path_1 = __importDefault(require("path"));
+const path_2 = __importDefault(require("path"));
 exports.default = ({ env }) => {
     const client = env('DATABASE_CLIENT', 'sqlite');
     const connections = {
@@ -47,7 +47,7 @@ exports.default = ({ env }) => {
         },
         sqlite: {
             connection: {
-                filename: path_1.default.join(__dirname, '..', '..', env('DATABASE_FILENAME', '.tmp/data.db')),
+                filename: path_2.default.join(__dirname, '..', '..', env('DATABASE_FILENAME', '.tmp/data.db')),
             },
             useNullAsDefault: true,
         },
