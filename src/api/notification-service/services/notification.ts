@@ -19,6 +19,7 @@ export default {
       notification: {
         title: payload.title,
         body: payload.body,
+        sound: 'default',
       },
       tokens: tokens,
       // เพิ่มการตั้งค่าสำหรับ Android/Web เพื่อให้แน่ใจว่าแสดงผลได้ดี
