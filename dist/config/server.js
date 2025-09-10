@@ -18,7 +18,7 @@ exports.default = ({ env }) => {
         },
         cron: {
             // ลองเปลี่ยนให้รับค่าจาก ENV ได้ด้วย ถ้าไม่มีให้ default เป็น true
-            enabled: env.bool('CRON_ENABLED', true),
+            enabled: env.bool('CRON_ENABLED', false),
         },
     };
     // ==========================================================
