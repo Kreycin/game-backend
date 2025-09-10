@@ -30,7 +30,7 @@ export default {
         console.log(`[LOG] ✅ Entry ID ${entry.id} is new. Proceeding.`);
         // ---------------------------------------------
 
-        if (model.singularName === 'announcement') {
+        if (model.singularName === 'api::announcement.announcement') {
           console.log(`[LOG] ✅ Model is 'announcement'. Processing notification logic.`);
           
           const { title, message, server } = entry;
