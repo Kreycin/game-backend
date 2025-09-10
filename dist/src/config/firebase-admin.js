@@ -1,5 +1,5 @@
 "use strict";
-// src/config/firebase-admin.ts
+// ✅ โค้ดใหม่สำหรับ: src/config/firebase-admin.ts
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -23,26 +23,33 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const admin = __importStar(require("firebase-admin"));
-const path = __importStar(require("path"));
-const serviceAccountPath = path.resolve(__dirname, '../../../config/firebase-service-account.json');
-let app;
-// ป้องกันการ initializeApp ซ้ำซ้อนตอน hot-reload
-if (!admin.apps.length) {
+// เพิ่ม console.log เพื่อตรวจสอบว่าไฟล์นี้ถูกโหลดหรือไม่
+console.log("--- [FIREBASE ADMIN LOADER - VERSION: PRODUCTION_READY] ---");
+// ตรวจสอบว่าแอปเคยถูก initialize แล้วหรือยัง
+if (admin.apps.length === 0) {
     try {
-        app = admin.initializeApp({
-            credential: admin.credential.cert(serviceAccountPath),
+        const privateKey = process.env.FIREBASE_PRIVATE_KEY;
+        // ตรวจสอบว่า Environment Variables ที่จำเป็นสำหรับ Production มีครบหรือไม่
+        if (process.env.NODE_ENV === 'production' && (!privateKey || !process.env.FIREBASE_CLIENT_EMAIL || !process.env.FIREBASE_PROJECT_ID)) {
+            throw new Error('Missing Firebase environment variables for production!');
+        }
+        // สร้าง object credential
+        const credential = admin.credential.cert({
+            projectId: process.env.FIREBASE_PROJECT_ID,
+            clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+            // บรรทัดนี้สำคัญมาก! ช่วยแก้ปัญหาการจัดรูปแบบ private key อัตโนมัติ
+            privateKey: privateKey.replace(/\\n/g, '\n'),
         });
+        // เริ่มการเชื่อมต่อ
+        admin.initializeApp({ credential });
+        console.log('✅ Firebase Admin has been initialized successfully from Environment Variables.');
     }
     catch (error) {
-        console.error('!!! FIREBASE ADMIN INITIALIZATION ERROR !!!');
-        console.error('Please ensure the service account file exists at the specified path and is valid.');
-        console.error(error);
-        // ทำให้แอปหยุดทำงานถ้าเชื่อมต่อ Firebase ไม่ได้ เพื่อป้องกันปัญหาอื่นๆ ตามมา
-        process.exit(1);
+        console.error('🔥 Firebase Admin initialization error:', error.message);
+        // ใน Production ควร log error ไว้ แต่ไม่ควรหยุดการทำงานของแอปทั้งหมด
+        // process.exit(1); 
     }
 }
-else {
-    app = admin.app();
-}
-module.exports = app;
+exports.default = admin;

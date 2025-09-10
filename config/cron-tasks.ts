@@ -1,4 +1,5 @@
 // 1. กำหนด Task ของ Cron Job ทั้งหมดไว้ที่นี่
+console.log("--- [CRON JOB FILE LOADED - VERSION: FINAL TEST] ---");
 export default {
   eventNotifier: {
     task: async ({ strapi }) => {

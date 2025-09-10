@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 // 1. กำหนด Task ของ Cron Job ทั้งหมดไว้ที่นี่
+console.log("--- [CRON JOB FILE LOADED - VERSION: FINAL TEST] ---");
 exports.default = {
     eventNotifier: {
         task: async ({ strapi }) => {
