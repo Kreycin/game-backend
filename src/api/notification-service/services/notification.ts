@@ -19,18 +19,30 @@ export default {
       notification: {
         title: payload.title,
         body: payload.body,
-        sound: 'default',
       },
       tokens: tokens,
+      
       // เพิ่มการตั้งค่าสำหรับ Android/Web เพื่อให้แน่ใจว่าแสดงผลได้ดี
       android: {
         priority: "high" as "high",
+         notification: {
+          sound: 'default',
+        },
+      },
+      // [เพิ่ม] เพิ่มการตั้งค่าเสียงสำหรับ Apple (iOS) ทั้งหมด
+      apns: {
+        payload: {
+          aps: {
+            sound: 'default',
+          },
+        },
       },
       webpush: {
         headers: {
           Urgency: "high",
         },
       },
+      
     };
 
     // --- จุดดีบัก ---
