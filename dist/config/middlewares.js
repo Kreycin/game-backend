@@ -39,8 +39,6 @@ exports.default = [
                 'https://newcharacterleaked.vercel.app',
                 'https://demonslayerhub.vercel.app'
             ],
-            methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
-            credentials: true,
         }
     },
     'strapi::poweredBy',
