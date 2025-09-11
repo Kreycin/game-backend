@@ -26,14 +26,14 @@ export default {
       android: {
         priority: "high" as "high",
          notification: {
-          sound: 'default',
+          sound: 'biwa',
         },
       },
       // [เพิ่ม] เพิ่มการตั้งค่าเสียงสำหรับ Apple (iOS) ทั้งหมด
       apns: {
         payload: {
           aps: {
-            sound: 'default',
+            sound: 'biwa.mp3',
           },
         },
       },
