@@ -33,12 +33,7 @@ exports.default = [
         name: 'strapi::cors',
         config: {
             headers: '*',
-            origin: [
-                'http://localhost:1337',
-                'http://localhost:5173',
-                'https://newcharacterleaked.vercel.app',
-                'https://demonslayerhub.vercel.app'
-            ]
+            origin: ['*']
         }
     },
     'strapi::poweredBy',
