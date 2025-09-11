@@ -32,7 +32,14 @@ export default [
     name: 'strapi::cors',
     config: {
       headers: '*',
-      origin: ['*']
+      origin: [
+        'http://localhost:1337',
+        'http://localhost:5173',
+        'https://newcharacterleaked.vercel.app',
+        'https://demonslayerhub.vercel.app'
+      ],
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+      credentials: true,
     }
   },
   'strapi::poweredBy',

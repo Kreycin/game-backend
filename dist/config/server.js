@@ -7,6 +7,8 @@ exports.default = ({ env }) => {
         host: env('HOST', '0.0.0.0'),
         port: env.int('PORT', 1337),
         url: env('URL'),
+        // เพิ่มบรรทัดนี้: บอกให้ Strapi ทราบว่ามี proxy อยู่ด้านหน้า
+        proxy: true,
         app: {
             keys: env.array('APP_KEYS'),
         },
@@ -14,10 +16,13 @@ exports.default = ({ env }) => {
             populateRelations: env.bool('WEBHOOKS_POPULATE_RELATIONS', false),
         },
         admin: {
+            // แก้ไขส่วนนี้: เพิ่ม auth secret และ proxy setting
+            auth: {
+                secret: env('ADMIN_JWT_SECRET'),
+            },
             serveAdminPanel: true,
         },
         cron: {
-            // ลองเปลี่ยนให้รับค่าจาก ENV ได้ด้วย ถ้าไม่มีให้ default เป็น true
             enabled: env.bool('CRON_ENABLED', false),
         },
     };
