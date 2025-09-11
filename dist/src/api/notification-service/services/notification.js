@@ -32,7 +32,7 @@ exports.default = {
             return { successCount: 0, failureCount: 0 };
         }
         const message = {
-            notification: {
+            data: {
                 title: payload.title,
                 body: payload.body,
             },

@@ -16,7 +16,7 @@ export default {
     }
 
     const message = {
-      notification: {
+      data: {
         title: payload.title,
         body: payload.body,
       },
