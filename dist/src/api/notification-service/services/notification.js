@@ -35,20 +35,21 @@ exports.default = {
             data: {
                 title: payload.title,
                 body: payload.body,
+                sound: 'titlecard'
             },
             tokens: tokens,
             // เพิ่มการตั้งค่าสำหรับ Android/Web เพื่อให้แน่ใจว่าแสดงผลได้ดี
             android: {
                 priority: "high",
                 notification: {
-                    sound: 'biwa',
+                    sound: 'titlecard',
                 },
             },
             // [เพิ่ม] เพิ่มการตั้งค่าเสียงสำหรับ Apple (iOS) ทั้งหมด
             apns: {
                 payload: {
                     aps: {
-                        sound: 'biwa.mp3',
+                        sound: 'titlecard.mp3',
                     },
                 },
             },
