@@ -70,6 +70,7 @@ export default {
     },
     options: {
       //rule: "*/1 * * * *", // ทำงานทุก 1 นาที
+      //j
     },
   },
 };
