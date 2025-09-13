@@ -59,8 +59,5 @@ exports.default = {
                 console.error('[CRON] ❌ เกิดข้อผิดพลาด:', error);
             }
         },
-        options: {
-        //rule: "*/1 * * * *", // ทำงานทุก 1 นาที
-        },
     },
 };
