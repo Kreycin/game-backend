@@ -6,7 +6,7 @@ exports.default = ({ env }) => {
     const serverConfig = {
         host: env('HOST', '0.0.0.0'),
         port: env.int('PORT', 1337),
-        url: env('URL'),
+        url: env('STRAPI_URL'),
         // เพิ่มบรรทัดนี้: บอกให้ Strapi ทราบว่ามี proxy อยู่ด้านหน้า
         proxy: true,
         app: {
