@@ -19,6 +19,7 @@ export default {
       data: {
         title: payload.title,
         body: payload.body,
+        sound: 'titlecard'
       },
       tokens: tokens,
       
@@ -26,14 +27,14 @@ export default {
       android: {
         priority: "high" as "high",
          notification: {
-          sound: 'biwa',
+          sound: 'titlecard',
         },
       },
       // [เพิ่ม] เพิ่มการตั้งค่าเสียงสำหรับ Apple (iOS) ทั้งหมด
       apns: {
         payload: {
           aps: {
-            sound: 'biwa.mp3',
+            sound: 'titlecard.mp3',
           },
         },
       },
