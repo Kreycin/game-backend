@@ -38,7 +38,7 @@ export default ({ env }) => ({
       provider: {
         name: 'memory',
         options: {
-          maxAge: 3600, // แคชข้อมูลไว้ 1 ชั่วโมง (3600 วินาที)
+          maxAge: 81600, // แคชข้อมูลไว้ วินาที)
         },
       },
       strategy: {
