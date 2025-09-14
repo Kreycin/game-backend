@@ -26,18 +26,8 @@ export default {
       // เพิ่มการตั้งค่าสำหรับ Android/Web เพื่อให้แน่ใจว่าแสดงผลได้ดี
       android: {
         priority: "high" as "high",
-         notification: {
-          sound: 'titlecard',
-        },
       },
       // [เพิ่ม] เพิ่มการตั้งค่าเสียงสำหรับ Apple (iOS) ทั้งหมด
-      apns: {
-        payload: {
-          aps: {
-            sound: 'titlecard.mp3',
-          },
-        },
-      },
       webpush: {
         headers: {
           Urgency: "high",
