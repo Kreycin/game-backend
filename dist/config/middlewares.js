@@ -37,7 +37,8 @@ exports.default = [
                 'http://localhost:1337',
                 'http://localhost:5173',
                 'https://newcharacterleaked.vercel.app',
-                'https://demonslayerhub.vercel.app'
+                'https://demonslayerhub.vercel.app',
+                'http://localhost:3000'
             ],
         }
     },

@@ -731,6 +731,7 @@ export interface ApiTierListCharacterTierListCharacter
 export interface ApiTierListGuideTierListGuide extends Struct.SingleTypeSchema {
   collectionName: 'tier_list_guides';
   info: {
+    description: '';
     displayName: 'Tier List Guide';
     pluralName: 'tier-list-guides';
     singularName: 'tier-list-guide';
@@ -739,30 +740,35 @@ export interface ApiTierListGuideTierListGuide extends Struct.SingleTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    build_and_teams: Schema.Attribute.RichText;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     credit_name: Schema.Attribute.String;
-    criteria: Schema.Attribute.Blocks;
+    criteria: Schema.Attribute.RichText;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::tier-list-guide.tier-list-guide'
     > &
       Schema.Attribute.Private;
+    profile: Schema.Attribute.RichText;
     publishedAt: Schema.Attribute.DateTime;
-    ratings: Schema.Attribute.Blocks;
-    roles: Schema.Attribute.Blocks;
-    tags: Schema.Attribute.Blocks;
+    ratings: Schema.Attribute.RichText;
+    review: Schema.Attribute.RichText;
+    roles: Schema.Attribute.RichText;
+    tags: Schema.Attribute.RichText;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    youtube_url: Schema.Attribute.String;
   };
 }
 
 export interface ApiTierListTierList extends Struct.CollectionTypeSchema {
   collectionName: 'tier_lists';
   info: {
+    description: '';
     displayName: 'Tier List';
     pluralName: 'tier-lists';
     singularName: 'tier-list';

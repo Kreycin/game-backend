@@ -31,23 +31,23 @@ exports.default = ({ env }) => ({
         },
     },
     // --- ส่วนของ Cache ที่เราเพิ่มเข้ามาใหม่ ---
-    'rest-cache': {
-        enabled: true,
-        config: {
-            provider: {
-                name: 'memory',
-                options: {
-                    maxAge: 81600, // แคชข้อมูลไว้ วินาที)
-                },
-            },
-            strategy: {
-                contentTypes: [
-                    // รายชื่อที่ได้จากการวิเคราะห์ Log
-                    'api::character.character',
-                    'api::tier-list.tier-list',
-                    'api::tier-list-guide.tier-list-guide',
-                ],
-            },
-        },
-    },
+    // 'rest-cache': {
+    //   enabled: true,
+    //   config: {
+    //     provider: {
+    //       name: 'memory',
+    //       options: {
+    //         maxAge: 81600, // แคชข้อมูลไว้ วินาที)
+    //       },
+    //     },
+    //     strategy: {
+    //       contentTypes: [
+    //         // รายชื่อที่ได้จากการวิเคราะห์ Log
+    //         'api::character.character',
+    //         'api::tier-list.tier-list',
+    //         'api::tier-list-guide.tier-list-guide',
+    //       ],
+    //     },
+    //   },
+    // },
 });

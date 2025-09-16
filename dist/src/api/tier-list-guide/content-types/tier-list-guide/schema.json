@@ -4,26 +4,39 @@
     "info": {
         "singularName": "tier-list-guide",
         "pluralName": "tier-list-guides",
-        "displayName": "Tier List Guide"
+        "displayName": "Tier List Guide",
+        "description": ""
     },
     "options": {
         "draftAndPublish": true
     },
     "pluginOptions": {},
     "attributes": {
+        "credit_name": {
+            "type": "string"
+        },
         "criteria": {
-            "type": "blocks"
+            "type": "richtext"
         },
         "roles": {
-            "type": "blocks"
+            "type": "richtext"
         },
         "ratings": {
-            "type": "blocks"
+            "type": "richtext"
         },
         "tags": {
-            "type": "blocks"
+            "type": "richtext"
         },
-        "credit_name": {
+        "profile": {
+            "type": "richtext"
+        },
+        "review": {
+            "type": "richtext"
+        },
+        "build_and_teams": {
+            "type": "richtext"
+        },
+        "youtube_url": {
             "type": "string"
         }
     }
