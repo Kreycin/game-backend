@@ -16,25 +16,25 @@
       "type": "string"
     },
     "criteria": {
-      "type": "Richtext"
+      "type": "blocks"
     },
     "roles": {
-      "type": "Richtext"
+      "type": "blocks"
     },
     "ratings": {
-      "type": "Richtext"
+      "type": "blocks"
     },
     "tags": {
-      "type": "Richtext"
+      "type": "blocks"
     },
     "profile": {
-      "type": "Richtext"
+      "type": "blocks"
     },
     "review": {
-      "type": "Richtext"
+      "type": "blocks"
     },
     "build_and_teams": {
-      "type": "Richtext"
+      "type": "blocks"
     },
     "youtube_url": {
       "type": "string"
