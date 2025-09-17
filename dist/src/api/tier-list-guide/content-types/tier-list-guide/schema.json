@@ -19,22 +19,22 @@
             "type": "richtext"
         },
         "roles": {
-            "type": "richtext"
+            "type": "blocks"
         },
         "ratings": {
-            "type": "richtext"
+            "type": "blocks"
         },
         "tags": {
-            "type": "richtext"
+            "type": "blocks"
         },
         "profile": {
-            "type": "richtext"
+            "type": "blocks"
         },
         "review": {
-            "type": "richtext"
+            "type": "blocks"
         },
         "build_and_teams": {
-            "type": "richtext"
+            "type": "blocks"
         },
         "youtube_url": {
             "type": "string"

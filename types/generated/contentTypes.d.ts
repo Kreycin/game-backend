@@ -740,7 +740,7 @@ export interface ApiTierListGuideTierListGuide extends Struct.SingleTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    build_and_teams: Schema.Attribute.RichText;
+    build_and_teams: Schema.Attribute.Blocks;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -752,12 +752,12 @@ export interface ApiTierListGuideTierListGuide extends Struct.SingleTypeSchema {
       'api::tier-list-guide.tier-list-guide'
     > &
       Schema.Attribute.Private;
-    profile: Schema.Attribute.RichText;
+    profile: Schema.Attribute.Blocks;
     publishedAt: Schema.Attribute.DateTime;
-    ratings: Schema.Attribute.RichText;
-    review: Schema.Attribute.RichText;
-    roles: Schema.Attribute.RichText;
-    tags: Schema.Attribute.RichText;
+    ratings: Schema.Attribute.Blocks;
+    review: Schema.Attribute.Blocks;
+    roles: Schema.Attribute.Blocks;
+    tags: Schema.Attribute.Blocks;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
